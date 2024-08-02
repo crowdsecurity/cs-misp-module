@@ -1,0 +1,37 @@
+name: Documentation links
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  markdown-test:
+    name: Markdown files test
+    runs-on: ubuntu-latest
+    steps:
+
+      - name: Clone sources
+        uses: actions/checkout@v4
+        with:
+          path: extension
+
+      - name: Launch localhost server
+        run: |
+          sudo npm install --global http-server
+          http-server ./extension &
+
+      - name: Set up Ruby 2.6
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: 2.6
+
+      - name: Check links in Markdown files
+        run: |
+          gem install awesome_bot
+          cd extension
+          awesome_bot --files README.md --allow-dupe --allow-redirect --allow 401 --skip-save-results --base-url http://localhost:8080/
+          awesome_bot docs/*.md --allow-dupe --allow-redirect --allow 401 --white-list http://localhost:80 --skip-save-results --base-url http://localhost:8080/docs/

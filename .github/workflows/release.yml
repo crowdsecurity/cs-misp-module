@@ -1,0 +1,140 @@
+name: Create release
+# example: gh workflow run release.yml -f tag_name=v1.1.4
+on:
+  workflow_dispatch:
+    inputs:
+      tag_name:
+        type: string
+        required: true
+        description: Tag name
+      first-release:
+        type: boolean
+        description: First release
+        default: false
+
+jobs:
+  create-release:
+    name: Create release
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    env:
+      EXTENSION_ZIP_NAME: "crowdsec-misp-module"
+      INPUT_TAG_NAME: ${{ github.event.inputs.tag_name }}
+
+    steps:
+      - name: Check naming convention
+        run: |
+          VERIF=$(echo ${{ env.INPUT_TAG_NAME }} | grep -E "^v([0-9]{1,}\.)([0-9]{1,}\.)([0-9]{1,})(-(alpha|beta)\.[0-9]{1,})?$")
+          if [ ! ${VERIF} ]
+          then
+            echo "Tag name does not comply with naming convention vX.Y.Z"
+            exit 1
+          fi
+
+      - name: Set version number env variables
+        run: |
+          # Set version number without v
+          echo "VERSION_NUMBER=$(echo ${{ env.INPUT_TAG_NAME }} | sed 's/v//g')" >> $GITHUB_ENV
+          # Set version with only major and minor
+          echo "VERSION_MAJOR_MINOR=$(echo ${{ env.INPUT_TAG_NAME }} | sed 's/v//g' | cut -d. -f1,2)" >> $GITHUB_ENV
+          # version with only major and minor and _ as separator
+          echo "VERSION_MAJOR_MINOR_UNDERSCORE=$(echo ${{ env.INPUT_TAG_NAME }} | sed 's/v//g' | cut -d. -f1,2 | sed 's/\./_/g')" >> $GITHUB_ENV
+
+      - name: Set version sources
+        run: |
+          echo "VERSION_SOURCES=$(echo ${{ env.EXTENSION_ZIP_NAME }}-${{ env.VERSION_NUMBER }} )" >> $GITHUB_ENV    
+
+      - name: Clone sources
+        uses: actions/checkout@v4
+        with:
+          path: ${{ env.VERSION_SOURCES }}
+
+      - name: Check version ${{ env.VERSION_NUMBER }} consistency in files and folder
+        # CHANGELOG.md, src/misp_modules/modules/expansion/crowdsec.py
+        run: |
+          cd ${{ env.VERSION_SOURCES }}
+          # Check top ## [VERSION_NUMBER](GITHUB_URL/releases/tag/vVERSION_NUMBER) - yyyy-mm-dd in CHANGELOG.md
+          # Example: ## [0.0.2](https://github.com/crowdsecurity/cs-thehive-cortex-analyzer/releases/tag/v0.0.2) - 2024-02-07
+          CURRENT_DATE=$(date +'%Y-%m-%d')
+          echo $CURRENT_DATE
+          CHANGELOG_VERSION=$(grep -o -E "## \[(.*)\].* - $CURRENT_DATE"  CHANGELOG.md | head -1 | sed 's/ //g')
+          echo $CHANGELOG_VERSION
+          if [[ $CHANGELOG_VERSION == "##[${{ env.VERSION_NUMBER }}]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/v${{ env.VERSION_NUMBER }})-$CURRENT_DATE" ]]
+          then
+              echo "CHANGELOG VERSION OK"
+          else
+              echo "CHANGELOG VERSION KO"
+              echo $CHANGELOG_VERSION
+              exit 1
+          fi
+          # Check top [_Compare with previous release_](GITHUB_URL/compare/vLAST_TAG...vVERSION_NUMBER) in CHANGELOG.md
+          # Example: [_Compare with previous release_](https://github.com/crowdsecurity/python-capi-sdk/compare/v0.0.1...v0.0.2)
+          if [[ ${{ github.event.inputs.first-release }} != "true" ]]
+          then
+            COMPARISON=$(grep -oP "$GITHUB_SERVER_URL/$GITHUB_REPOSITORY/compare/\K(.*)$" CHANGELOG.md | head -1)
+            LAST_TAG=$(curl -Ls -o /dev/null -w %{url_effective} $GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/latest | grep -oP "\/tag\/\K(.*)$")
+            if [[ $COMPARISON == "$LAST_TAG...v${{ env.VERSION_NUMBER }})" ]]
+            then
+              echo "VERSION COMPARISON OK"
+            else
+              echo "VERSION COMPARISON KO"
+              echo $COMPARISON
+              echo "$LAST_TAG...v${{ env.VERSION_NUMBER }})"
+              exit 1
+            fi
+          fi
+          # Check "User-Agent": "crowdsec-misp/vVERSION_NUMBER", in src/misp_modules/modules/expansion/crowdsec.py
+          if [[ ${{ github.event.inputs.first-release }} != "true" ]]
+          # First release has incorrect User-Agent (should be 2.0.0 as the moduleinfo version is 2.0)
+          then
+            UA_VERSION=$(grep -E "\"User-Agent\": \"crowdsec-misp\/v(.*)\""  src/misp_modules/modules/expansion/crowdsec.py | sed 's/ //g' | sed 's/"//g')
+            if [[ $UA_VERSION == "User-Agent:crowdsec-misp/v${{ env.VERSION_NUMBER }}," ]]
+            then
+                echo "USER AGENT VERSION OK"
+            else
+                echo "USER AGENT VERSION KO"
+                echo $UA_VERSION 
+                exit 1
+            fi
+          fi
+          # Check "version": "VERSION_MAJOR_MINOR", in src/misp_modules/modules/expansion/crowdsec.py
+          INFO_VERSION=$(grep -E "\"version\": \"${{ env.VERSION_MAJOR_MINOR }}\""  src/misp_modules/modules/expansion/crowdsec.py | sed 's/ //g' | sed 's/"//g')
+          if [[ $INFO_VERSION == "version:${{ env.VERSION_MAJOR_MINOR }}," ]]
+          then
+              echo "INFO VERSION OK"
+          else
+              echo "INFO VERSION KO"
+              echo $INFO_VERSION 
+              exit 1
+          fi
+
+      - name: Create zip for MISP modules pull request
+        run: |
+          zip -r ${{ env.VERSION_SOURCES }}.zip ${{ env.VERSION_SOURCES }}/src
+
+      - name: Create Tag ${{ github.event.inputs.tag_name }}
+        uses: actions/github-script@v7
+        with:
+          github-token: ${{ github.token }}
+          script: |
+            github.rest.git.createRef({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              ref: "refs/tags/${{ github.event.inputs.tag_name }}",
+              sha: context.sha
+            })
+
+      - name: Prepare release notes
+        run: |
+          # Retrieve release body and remove ---
+          VERSION_RELEASE_NOTES=$(awk -v ver="[${{ env.VERSION_NUMBER }}]($GITHUB_SERVER_URL/$GITHUB_REPOSITORY/releases/tag/v${{ env.VERSION_NUMBER }})" '/^## / { if (p) { exit }; if ($2 == ver) { p=1; next} } p && NF' ${{ env.VERSION_SOURCES }}/CHANGELOG.md | sed ':a;N;$!ba;s/\n---/ /g')
+          echo "$VERSION_RELEASE_NOTES" >> CHANGELOG.txt
+
+      - name: Create release ${{ env.VERSION_NUMBER }}
+        uses: softprops/action-gh-release@v2
+        with:
+          files: ${{ env.VERSION_SOURCES }}.zip
+          body_path: CHANGELOG.txt
+          name: ${{ env.VERSION_NUMBER }}
+          tag_name: ${{ env.INPUT_TAG_NAME }}
