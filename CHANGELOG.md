@@ -11,4 +11,4 @@ The [public API](https://semver.org/spec/v2.0.0.html#spec-item-1)  for this proj
 
 ## [2.0.0](https://github.com/crowdsecurity/cs-misp-module/releases/tag/v2.0.0) - 2024-08-02
 
-- Initial release: synchronization with MISP modules `v2.4.195` release
+- Initial release: synchronization with [MISP modules `v2.4.195` release](https://github.com/MISP/misp-modules/releases/tag/v2.4.195)
