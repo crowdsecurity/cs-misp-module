@@ -113,6 +113,21 @@ After each modification in the module code, you need to restart the misp-modules
 docker compose restart misp-modules
 ```
 
+## Code formatting
+
+The code is formatted using `black`, `isort` and `flake8`. You can run the following command to format the code:
+
+```bash
+python -m pip install --upgrade pip
+pip install -r dev/requirements.txt
+cd crowdsec-misp
+black  -v ./cs-misp-module/src/misp_modules/modules/expansion/crowdsec.py
+isort --profile black  -v ./cs-misp-module
+cd cs-misp-module
+flake8 ./src/misp_modules/modules/expansion/crowdsec.py
+```
+
+
 ## Update documentation table of contents
 
 To update the table of contents in the documentation, you can use [the `doctoc` tool](https://github.com/thlorenz/doctoc).
