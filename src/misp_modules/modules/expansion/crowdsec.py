@@ -305,7 +305,7 @@ def _handler_v2(request_data):
         crowdsec_context_object.add_attribute(
             "mitre-techniques",
             technique["label"],
-            comment=f"{technique["description"]} ({mitre_url})",
+            comment=f'{technique["description"]} ({mitre_url})',
         )
         if add_mitre_technique_tag:
             tag = f'crowdsec:mitre-technique="{technique_name}"'
