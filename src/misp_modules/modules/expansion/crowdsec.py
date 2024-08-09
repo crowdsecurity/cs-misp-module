@@ -366,7 +366,7 @@ def _handler_v2(request_data):
 
 def get_country_name_from_alpha_2(alpha_2):
     country_info = pycountry.countries.get(alpha_2=alpha_2)
-    return country_info.name
+    return country_info.name if country_info else None
 
 
 def introspection():

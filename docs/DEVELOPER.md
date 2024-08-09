@@ -127,6 +127,20 @@ cd cs-misp-module
 flake8 ./src/misp_modules/modules/expansion/crowdsec.py
 ```
 
+## Unit tests
+
+First, prepare your virtual environment:
+
+```bash
+python -m pip install --upgrade pip
+python -m pip install -r tests/requirements.txt
+```
+
+Then, run tests: 
+
+```bash
+python -m pytest -v
+```
 
 ## Update documentation table of contents
 

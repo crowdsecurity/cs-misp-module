@@ -1,0 +1,408 @@
+{
+   "results":{
+      "Attribute":[
+         {
+            "uuid":"1234",
+            "type":"ip-src",
+            "value":"1.2.3.4",
+            "category":"Network activity",
+            "to_ids":true,
+            "disable_correlation":false
+         }
+      ],
+      "Object":[
+         {
+            "name":"crowdsec-ip-context",
+            "meta-category":"network",
+            "template_uuid":"0f0a6def-a351-4d3b-9868-d732f6f4666f",
+            "description":"CrowdSec Threat Intelligence - IP CTI search",
+            "template_version":"4",
+            "uuid":"d5fc2c51-953b-45c0-89a9-dc0b9430ca6d",
+            "ObjectReference":[
+               {
+                  "uuid":"46876c9b-23f9-4fa4-a735-d36accd7e701",
+                  "object_uuid":"d5fc2c51-953b-45c0-89a9-dc0b9430ca6d",
+                  "referenced_uuid":"1234",
+                  "relationship_type":"related-to"
+               }
+            ],
+            "Attribute":[
+               {
+                  "uuid":"a71f422a-181b-4316-8936-db74fc53b89c",
+                  "Tag":[
+                     {
+                        "name":"crowdsec:reputation=\"malicious\""
+                     },
+                     {
+                        "name":"crowdsec:behavior=\"http:scan\""
+                     },
+                     {
+                        "name":"crowdsec:behavior=\"http:exploit\""
+                     },
+                     {
+                        "name":"crowdsec:behavior=\"http:bruteforce\""
+                     },
+                     {
+                        "name":"crowdsec:behavior=\"tcp:scan\""
+                     },
+                     {
+                        "name":"crowdsec:behavior=\"http:spam\""
+                     },
+                     {
+                        "name":"crowdsec:behavior=\"http:crawl\""
+                     },
+                     {
+                        "name":"crowdsec:behavior=\"http:dos\""
+                     },
+                     {
+                        "name":"crowdsec:mitre-technique=\"T1110\""
+                     },
+                     {
+                        "name":"crowdsec:mitre-technique=\"T1595\""
+                     },
+                     {
+                        "name":"crowdsec:mitre-technique=\"T1190\""
+                     },
+                     {
+                        "name":"crowdsec:mitre-technique=\"T1589\""
+                     },
+                     {
+                        "name":"crowdsec:mitre-technique=\"T1018\""
+                     },
+                     {
+                        "name":"crowdsec:mitre-technique=\"T1046\""
+                     },
+                     {
+                        "name":"crowdsec:mitre-technique=\"T1498\""
+                     },
+                     {
+                        "name":"crowdsec:cve=\"CVE-2021-41773\""
+                     },
+                     {
+                        "name":"crowdsec:cve=\"CVE-2022-26134\""
+                     },
+                     {
+                        "name":"crowdsec:classification=\"community-blocklist\""
+                     }
+                  ],
+                  "object_relation":"ip",
+                  "value":"TEST.IP.186.190",
+                  "type":"ip-src",
+                  "category":"Network activity",
+                  "disable_correlation":false,
+                  "to_ids":true
+               },
+               {
+                  "uuid":"a67c8694-116c-4bf6-9cde-d406ce509886",
+                  "object_relation":"reputation",
+                  "value":"malicious",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"6910eb40-9938-4109-9f1c-6024fbe98482",
+                  "object_relation":"ip-range",
+                  "value":"TEST.IP.160.0/19",
+                  "type":"text",
+                  "category":"Network activity",
+                  "disable_correlation":false,
+                  "to_ids":false
+               },
+               {
+                  "uuid":"279f248e-6e9a-4e3a-9c10-1f72eab0339f",
+                  "object_relation":"ip-range-score",
+                  "value":"5",
+                  "type":"float",
+                  "category":"Other",
+                  "disable_correlation":true,
+                  "to_ids":false
+               },
+               {
+                  "uuid":"bd1ef5fc-05a8-475d-85c7-96f180dd1cf9",
+                  "object_relation":"country",
+                  "value":"United States",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"351899fb-ced3-41d0-9bb8-3982f1fc6ea7",
+                  "object_relation":"country-code",
+                  "value":"US",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"0df5871e-c3f8-4d7d-b3f3-ea3ec095baa6",
+                  "object_relation":"city",
+                  "value":"New York",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"ecc3d7b1-76c4-4be9-9d94-4cf2659c19d6",
+                  "object_relation":"latitude",
+                  "value":40.7157,
+                  "type":"float",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"b1daa0e0-54e2-4fae-b809-06b9e850d75c",
+                  "object_relation":"longitude",
+                  "value":-74.0,
+                  "type":"float",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"19780e20-3c47-4c53-970f-ead30598960a",
+                  "object_relation":"as-name",
+                  "value":"M247 Europe SRL",
+                  "type":"text",
+                  "category":"Network activity",
+                  "disable_correlation":true,
+                  "to_ids":false
+               },
+               {
+                  "uuid":"1d803d00-7bd0-4f03-9e6b-f842d7abdc1c",
+                  "object_relation":"as-num",
+                  "value":"9009",
+                  "type":"AS",
+                  "category":"Network activity",
+                  "disable_correlation":true,
+                  "to_ids":false
+               },
+               {
+                  "uuid":"5d0a315e-cf1c-4bd4-ba35-117e36c0db0f",
+                  "object_relation":"background-noise",
+                  "value":"7",
+                  "type":"float",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"b7399c82-ed13-4529-ac1e-53d1eb8f0423",
+                  "object_relation":"behaviors",
+                  "value":"HTTP Scan",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP has been reported for performing actions related to HTTP vulnerability scanning and discovery."
+               },
+               {
+                  "uuid":"395c3e89-8446-43b8-9c48-c4e81b701cf6",
+                  "object_relation":"behaviors",
+                  "value":"HTTP Exploit",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP has been reported for attempting to exploit a vulnerability in a web application."
+               },
+               {
+                  "uuid":"6cb69499-7d37-46a4-ab22-64a5f8f470ea",
+                  "object_relation":"behaviors",
+                  "value":"HTTP Bruteforce",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP has been reported for performing a HTTP brute force attack (either generic HTTP probing or applicative related brute force)."
+               },
+               {
+                  "uuid":"87406830-9cee-4977-acf1-f26df456af4b",
+                  "object_relation":"behaviors",
+                  "value":"TCP Scan",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP has been reported for performing TCP port scanning."
+               },
+               {
+                  "uuid":"71f2771f-c1e6-450f-abbb-7fffb1b49a8f",
+                  "object_relation":"behaviors",
+                  "value":"Web form spam",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP has been reported trying to perform spam via web forms/forums."
+               },
+               {
+                  "uuid":"4aafca66-2c57-4fde-a56a-0a893fcc429c",
+                  "object_relation":"behaviors",
+                  "value":"HTTP Crawl",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP has been reported for performing aggressive crawling of web applications."
+               },
+               {
+                  "uuid":"5123a139-3211-4794-bf60-3d8b5d950cc5",
+                  "object_relation":"behaviors",
+                  "value":"HTTP DoS",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP has been reported trying to perform denial of service attacks."
+               },
+               {
+                  "uuid":"57a3324c-58b4-40f4-8c6b-754b47ec3e61",
+                  "object_relation":"mitre-techniques",
+                  "value":"Brute Force",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"Adversaries may use brute force techniques to gain access to accounts when passwords are unknown or when password hashes are obtained. (https://attack.mitre.org/techniques/T1110)"
+               },
+               {
+                  "uuid":"7751b727-d809-492c-b46a-339fd596ebee",
+                  "object_relation":"mitre-techniques",
+                  "value":"Active Scanning",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"Adversaries may execute active reconnaissance scans to gather information that can be used during targeting. (https://attack.mitre.org/techniques/T1595)"
+               },
+               {
+                  "uuid":"d1ccf6d5-25e8-4424-91ba-186b76ebe7e4",
+                  "object_relation":"mitre-techniques",
+                  "value":"Exploit Public-Facing Application",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"Adversaries may attempt to exploit a weakness in an Internet-facing host or system to initially access a network. (https://attack.mitre.org/techniques/T1190)"
+               },
+               {
+                  "uuid":"be3c7ff4-e1e0-496a-b560-ceb6e971638d",
+                  "object_relation":"mitre-techniques",
+                  "value":"Gather Victim Identity Information",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"Adversaries may gather information about the victim's identity that can be used during targeting. (https://attack.mitre.org/techniques/T1589)"
+               },
+               {
+                  "uuid":"05fc9135-66a6-47c1-a7c2-eda4c0df6b37",
+                  "object_relation":"mitre-techniques",
+                  "value":"Remote System Discovery",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"Adversaries may attempt to get a listing of other systems by IP address, hostname, or other logical identifier on a network that may be used for Lateral Movement from the current system. (https://attack.mitre.org/techniques/T1018)"
+               },
+               {
+                  "uuid":"da0b666d-2b1f-4d02-bc1e-adf8e428a14f",
+                  "object_relation":"mitre-techniques",
+                  "value":"Network Service Discovery",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"Adversaries may attempt to get a listing of services running on remote hosts and local network infrastructure devices, including those that may be vulnerable to remote software exploitation. (https://attack.mitre.org/techniques/T1046)"
+               },
+               {
+                  "uuid":"e9488cb0-473a-408e-81e5-77a8b8856e9e",
+                  "object_relation":"mitre-techniques",
+                  "value":"Network Denial of Service",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"Adversaries may perform Network Denial of Service (DoS) attacks to degrade or block the availability of targeted resources to users. (https://attack.mitre.org/techniques/T1498)"
+               },
+               {
+                  "uuid":"f09c5947-ed81-4f45-bd5f-026e63092cdd",
+                  "object_relation":"cves",
+                  "value":"CVE-2021-41773",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"https://nvd.nist.gov/vuln/detail/CVE-2021-41773"
+               },
+               {
+                  "uuid":"84aa8129-1475-4923-9dac-bbfef8031d62",
+                  "object_relation":"cves",
+                  "value":"CVE-2022-26134",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"https://nvd.nist.gov/vuln/detail/CVE-2022-26134"
+               },
+               {
+                  "uuid":"58ebb3db-89b1-4794-b5f9-37700f21a28b",
+                  "object_relation":"classifications",
+                  "value":"CrowdSec Community Blocklist",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other",
+                  "comment":"IP belongs to the CrowdSec Community Blocklist"
+               },
+               {
+                  "uuid":"b7519942-f098-4075-84d7-5f1197cf5ed7",
+                  "object_relation":"attack-details",
+                  "value":"crowdsecurity/CVE-2022-26134 - Confluence CVE-2022-26134 (Detect CVE-2022-26134 exploits), crowdsecurity/http-path-traversal-probing - HTTP Path Traversal Exploit (Detect path traversal attempt), crowdsecurity/http-sensitive-files - Access to sensitive files over HTTP (Detect attempt to access to sensitive files (.log, .db ..) or folders (.git)), crowdsecurity/http-probing - HTTP Probing (Detect site scanning/probing from a single ip), crowdsecurity/http-cve-2021-41773 - CVE-2021-41773 (cve-2021-41773), crowdsecurity/http-open-proxy - HTTP Open Proxy Probing (Detect scan for open proxy), firewallservices/pf-scan-multi_ports - PF Scan Multi Ports (ban IPs that are scanning us), crowdsecurity/http-sqli-probbing-detection - SQL Injection Attempt (A scenario that detects SQL injection probing with minimal false positives), crowdsecurity/http-backdoors-attempts - Scanning for backdoors (Detect attempt to common backdoors), crowdsecurity/http-bad-user-agent - Bad User Agent (Detect usage of bad User Agent), crowdsecurity/http-crawl-non_statics - Aggressive Crawl (Detect aggressive crawl on non static resources), crowdsecurity/http-admin-interface-probing - HTTP Admin Interface Probing (Detect generic HTTP admin interface probing), crowdsecurity/http-dos-swithcing-ua - HTTP DOS with varying UA (Detect DoS tools switching user-agent too fast)",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"738f1571-b8fd-4f04-a679-51fb8a0da95d",
+                  "object_relation":"target-countries",
+                  "value":"United States, Germany, France, United Kingdom, Japan, Netherlands, Poland, Hungary, Australia, Switzerland",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"6825df9c-5cec-442b-a650-90e9adcfbe77",
+                  "object_relation":"trust",
+                  "value":"5",
+                  "type":"float",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               },
+               {
+                  "uuid":"5fa18d40-2fd6-41c1-84da-c15d9ad76c6e",
+                  "object_relation":"scores",
+                  "value":"Overall: Aggressiveness: 5 - Threat: 2 - Trust: 5 - Anomaly: 1 - Total: 4, Last Day: Aggressiveness: 1 - Threat: 4 - Trust: 0 - Anomaly: 1 - Total: 2, Last Week: Aggressiveness: 1 - Threat: 4 - Trust: 2 - Anomaly: 1 - Total: 3, Last Month: Aggressiveness: 2 - Threat: 4 - Trust: 5 - Anomaly: 1 - Total: 4",
+                  "type":"text",
+                  "disable_correlation":true,
+                  "to_ids":false,
+                  "category":"Other"
+               }
+            ],
+            "distribution":"5",
+            "sharing_group_id":"0",
+            "first_seen":"2023-06-13T19:00:00+00:00",
+            "last_seen":"2024-04-18T08:15:00+00:00"
+         }
+      ]
+   }
+}
