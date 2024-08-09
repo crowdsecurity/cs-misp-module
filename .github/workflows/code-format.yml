@@ -22,7 +22,6 @@ jobs:
     env:
       SOURCES: "crowdsec-misp-module"
 
-
     steps:
     - uses: actions/checkout@v4
       with:
@@ -36,11 +35,12 @@ jobs:
       run: |
         cd ${{ env.SOURCES }}
         python -m pip install --upgrade pip
-        python -m pip install -r dev/requirements.txt
+        python -m pip install -r tests/requirements.txt
 
     - name: black check
       run: |
         black --check -v ./${{ env.SOURCES }}/src/misp_modules/modules/expansion/crowdsec.py
+        black --check -v ./${{ env.SOURCES }}/tests
 
     - name: isort check
       run: |
@@ -50,3 +50,4 @@ jobs:
       run: |
         cd ${{ env.SOURCES }}
         flake8 -v ./src/misp_modules/modules/expansion/crowdsec.py
+        flake8 -v ./tests
