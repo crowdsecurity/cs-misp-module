@@ -2,7 +2,7 @@ name: Unit tests
 
 on:
   push:
-    branches: [ main, feat/update-module ]
+    branches: [ main ]
     paths-ignore:
       - '**.md'
   pull_request:
