@@ -11,6 +11,8 @@
   - [Start Docker environment](#start-docker-environment)
   - [Stop Docker environment](#stop-docker-environment)
 - [Manual testing in UI](#manual-testing-in-ui)
+- [Code formatting](#code-formatting)
+- [Unit tests](#unit-tests)
 - [Update documentation table of contents](#update-documentation-table-of-contents)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
