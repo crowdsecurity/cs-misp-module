@@ -34,4 +34,4 @@ jobs:
           gem install awesome_bot
           cd extension
           awesome_bot --files README.md --allow-dupe --allow-redirect --allow 401 --skip-save-results --base-url http://localhost:8080/
-          awesome_bot docs/*.md --allow-dupe --allow-redirect --allow 401 --white-list http://localhost:80 --skip-save-results --base-url http://localhost:8080/docs/
+          awesome_bot docs/*.md --allow-dupe --allow-redirect --allow 401 --white-list http://localhost:80,releases/tag/A.B.C,http://<your_misp_address> --skip-save-results --base-url http://localhost:8080/docs/
