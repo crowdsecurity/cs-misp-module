@@ -93,7 +93,7 @@ Then, start the docker environment:
 cd misp-docker && docker compose up -d --build
 ```
 
-Once running, you can browse to your MISP instance at `http://localhost:80` and login with the default credentials that you can find in the `.env` file.
+Once running, you can browse to your MISP instance at `http://127.0.0.1:80` and login with the default credentials that you can find in the `.env` file.
 
 
 ### Stop Docker environment

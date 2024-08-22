@@ -22,7 +22,7 @@
 
 Enabling this module could be done by browsing to the Plugins tab of your MISP instance: 
 
-- Navigate to plugin settings page at `http://your_misp_address/servers/serverSettings/Plugin`
+- Navigate to plugin settings page at `http://your-misp-address/servers/serverSettings/Plugin`
 - Click on Enrichment
 - Set the value of `Plugin.Enrichment_crowdsec_enabled` to `true`
 - Set the value of `Plugin.Enrichment_crowdsec_api_key` to your CrowdSec CTI API key
