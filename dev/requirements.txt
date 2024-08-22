@@ -1,0 +1,6 @@
+pycountry
+requests
+pymisp
+black
+isort
+flake8

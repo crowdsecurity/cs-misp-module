@@ -27,3 +27,4 @@ Enabling this module could be done by browsing to the Plugins tab of your MISP i
 - Set the value of `Plugin.Enrichment_crowdsec_enabled` to `true`
 - Set the value of `Plugin.Enrichment_crowdsec_api_key` to your CrowdSec CTI API key
 
+For more details on the settings available, please refer to the [User Guide](../USER_GUIDE.md#configuration).

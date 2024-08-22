@@ -9,6 +9,17 @@ The [public API](https://semver.org/spec/v2.0.0.html#spec-item-1)  for this proj
 
 ---
 
+
+## [2.1.0](https://github.com/crowdsecurity/cs-misp-module/releases/tag/v2.1.0) - 2024-08-22
+[_Compare with previous release_](https://github.com/crowdsecurity/cs-misp-module/compare/v2.0.0...v2.1.0)
+
+### Added
+
+- Add attribute and tag for reputation, mitre techniques and cves
+- Add config to enable/disable tag creation for IP attributes
+
+---
+
 ## [2.0.0](https://github.com/crowdsecurity/cs-misp-module/releases/tag/v2.0.0) - 2024-08-02
 
 - Initial release: synchronization with [MISP modules `v2.4.195` release](https://github.com/MISP/misp-modules/releases/tag/v2.4.195)
