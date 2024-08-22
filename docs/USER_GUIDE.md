@@ -18,7 +18,7 @@ This is a MISP module which enriches your knowledge by using CrowdSec's CTI API.
 
 ## Configuration
 
-You will find settings page at `http://<your_misp_address>/servers/serverSettings/Plugin`
+You will find settings page at `http://your_misp_address/servers/serverSettings/Plugin`
 
 Configuration parameters are described below:
 
