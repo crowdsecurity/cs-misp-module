@@ -2,3 +2,7 @@ services:
   misp-modules:
     volumes:
       - ../cs-misp-module/src/misp_modules/modules/expansion/crowdsec.py:/usr/local/lib/python3.12/site-packages/misp_modules/modules/expansion/crowdsec.py
+      - ../cs-misp-module/dev/crowdsec-ip-context-definition.json:/usr/local/lib/python3.12/site-packages/pymisp/data/misp-objects/objects/crowdsec-ip-context/definition.json
+
+
+

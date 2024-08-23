@@ -9,6 +9,16 @@ The [public API](https://semver.org/spec/v2.0.0.html#spec-item-1)  for this proj
 
 ---
 
+## [2.1.1](https://github.com/crowdsecurity/cs-misp-module/releases/tag/v2.1.1) - 2024-08-23
+[_Compare with previous release_](https://github.com/crowdsecurity/cs-misp-module/compare/v2.1.0...v2.1.1)
+
+### Fixed
+
+- Check if the IP is valid before calling CrowdSec API
+- Use `crowdsec-ip-context` template from [MISP objects repository](https://github.com/MISP/misp-objects/tree/main/objects/crowdsec-ip-context)
+
+---
+
 
 ## [2.1.0](https://github.com/crowdsecurity/cs-misp-module/releases/tag/v2.1.0) - 2024-08-22
 [_Compare with previous release_](https://github.com/crowdsecurity/cs-misp-module/compare/v2.0.0...v2.1.0)

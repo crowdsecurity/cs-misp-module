@@ -105,10 +105,10 @@
                   "uuid":"6910eb40-9938-4109-9f1c-6024fbe98482",
                   "object_relation":"ip-range",
                   "value":"TEST.IP.160.0/19",
-                  "type":"text",
+                  "type":"ip-src",
                   "category":"Network activity",
                   "disable_correlation":false,
-                  "to_ids":false
+                  "to_ids":true
                },
                {
                   "uuid":"279f248e-6e9a-4e3a-9c10-1f72eab0339f",

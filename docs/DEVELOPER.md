@@ -75,7 +75,10 @@ git clone git@github.com:misp/misp-docker.git
 Before running the docker environment, we need to create a volume so that our local sources are mounted in the misp-modules container.
 
 **Warning**: The python version that is hard-coded in the `docker-compose.override.yml` may change: it should be same version that is used by the misp-modules container.
-Please look the `python_version` value at the end of the `misp-modules/Pipfile` file.
+
+**Warning 2**: You can comment `the crowdsec-ip-context-definition.json` if you want to use the definition coming from 
+the [MISP Objects repository](https://github.com/MISP/misp-objects/blob/main/objects/crowdsec-ip-context/definition.json).
+If you need to modify the definition during the development, you can uncomment it and modify the`cs-misp-module/dev/crowdsec-ip-context-definition.json` file.
 
 ```bash
 cp cs-misp-module/dev/docker-compose.override.yml misp-docker/
@@ -212,18 +215,20 @@ Before creating a release, ensure to format correctly the `CHANGELOG.md` file an
 
 Then, you can use the [Create Release action](https://github.com/crowdsecurity/cs-misp-module/actions/workflows/release.yml).
 
+For the rest of the process, we will use the release version `vX.Y.Z` as an example.
+
 #### Retrieve zip for release
 
 At the end of the Create Release action run, you can download a zip containing the relevant files.  
 
 #### Create a branch for the Pull Request
 
-If your release is `vX.Y.Z`, you can create a `feat/release-X.Y.Z` branch:
+If your release `vX.Y.Z` has been published on `YYYY-MM-DD`, you can create a `feat/release-YYYYMMDD` branch:
 
 ```shell
 cd misp-modules
 git checkout amin
-git checkout -b feat/release-X.Y.Z
+git checkout -b feat/release-YYYYMMDD
 ```
 
 #### Update sources
@@ -237,7 +242,6 @@ rm -rf misp_modules/modules/expansion/crowdsec.py
 
 Then, unzip the `crowdsec-misp-module-X.Y.Z.zip` archive and copy files in the right folders:
 - `src/misp_modules/modules/expansion/crowdsec.py` -> `misp_modules/modules/expansion/crowdsec.py`
-
 
 
 Now, you can verify the diff.
@@ -258,7 +262,7 @@ Change
 services:
   misp-modules:
     volumes:
-      - ../cs-misp-module/src/misp_modules/modules/expansion/crowdsec.py:/usr/local/lib/python?.??/site-packages/misp_modules/modules/expansion/crowdsec.py
+      - ../cs-misp-module/src/misp_modules/modules/expansion/crowdsec.py:/usr/local/lib/python3.12/site-packages/misp_modules/modules/expansion/crowdsec.py
 
 ```
 
@@ -268,9 +272,11 @@ to
 services:
   misp-modules:
     volumes:
-      - ../misp-modules/misp_modules/modules/expansion/crowdsec.py:/usr/local/lib/python?.??/site-packages/misp_modules/modules/expansion/crowdsec.py
+      - ../misp-modules/misp_modules/modules/expansion/crowdsec.py:/usr/local/lib/python3.12/site-packages/misp_modules/modules/expansion/crowdsec.py
 
 ```
+
+**Beware**: The python version that is hard-coded in the `docker-compose.override.yml` may change: it should be same version that is used by the misp-modules container.
 
 
 #### Open a Pull request
@@ -278,68 +284,52 @@ services:
 Push your modification 
 
 ```shell
-git push origin feat/release-X.Y.Z
+git push origin feat/release-YYYYMMDD
 ```
 
-Now you can use the `feat/release-X.Y.Z` branch to open a pull request in the MISP modules repository.
+Now you can use the `feat/release-YYYYMMDD` branch to open a pull request in the MISP modules repository.
 For the pull request description, you could use the release version description that you wrote in the `CHANGELOG.md` file.
-
 
 
 ### During the pull request review
 
-As long as the pull request is in review state, we should not create a new release. 
-If there are modifications to do, we can do it directly on the `feat/release-X.Y.Z`. 
-All changes made to pass the pull request review must be back ported to a `feat/pr-review-X.Y.Z` branch created in this repository:
+If there are modifications to do, we use the `feat/pr-<pr-number>-ongoing` branch to do them: 
 
 ```shell
 cd cs-misp-module
 git checkout main
-git checkout -b feat/pr-review-X.Y.Z
+git checkout -b feat/pr-<pr-number>-ongoing
 ```
+
+We have to update `feat/release-YYYYMMDD` and `feat/pr-<pr-number>-ongoing` branches simultaneously.
+
+If modifications are related to the public API of the module (defined at the top of `CHANGELOG.md`), a new release (patch, minor or major depending on the changes) 
+should be created. The release zip archive will be used to update once again the `feat/release-YYYYMMDD` in `misp-modules` fork, updating automatically the current pull request.
+
+If modifications are not related to the public API, the `feat/release-YYYYMMDD` and `feat/pr-<pr-number>-ongoing` branches should be updated directly.
+
 
 ### Once pull request is merged
 
-If pull request has been merged without any modification, there is nothing more to do.
+Pull Request should have been merged without any modification related to the public API of the module (defined at the top of `CHANGELOG.md`).
 
-If there were modifications, we need to update the sources anc create a patch release.
+Thus, it should be unnecessary to create a new release.
 
-#### Sync fork with upstream
-
-First, sync the connector fork like we did [here](#sync-fork-with-upstream). 
-
-#### Retrieve last version
-
-After this, you should have the last version of the CrowdSec module in `misp_modules/modules/expansion/crowdsec.py`.
-
-You need to retrieve it and commit the differences.
+To backport remaining modifications (test files, documentation, etc.) to the `main` branch, we can merge the `feat/pr-<pr-number>-ongoing` branch into `main`:
 
 ```shell
 cd cs-misp-module
-git checkout feat/pr-review-X.Y.Z
+git checkout main
+git merge feat/pr-<pr-number>-ongoing
+git push origin main
 ```
 
-Delete `src/misp_modules/modules/expansion/crowdsec.py`.
-
-Copy all files from the modules fork: 
-
-```
-cp -r ../misp-modules/misp_modules/modules/expansion/crowdsec.py ./src/misp_modules/modules/expansion/crowdsec.py
-```
-
-Add and commit the result. Push the `feat/pr-review-X.Y.Z` and merge it into `main` with a pull request.
 
 
-#### Create a new minor release
 
-Once the `main` branch is updated, you can create a new minor `X.Y.Z+1` release with the following CHANGELOG content:
 
-```
-## Changed
 
-- Synchronize content with MISP modules release [A.B.C](https://github.com/MISP/misp-modules/releases/tag/A.B.C)
 
-```
 
 
 
