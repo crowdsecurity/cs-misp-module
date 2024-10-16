@@ -324,6 +324,15 @@ git merge feat/pr-<pr-number>-ongoing
 git push origin main
 ```
 
+We can also update the last release description to mention that it is synchronized with the `misp-modules` repository, 
+by pointing to the merge commit: 
+
+```markdown
+[_Release code has been merged in the **MISP/misp-modules** repository_](https://github.com/MISP/misp-modules/commit/<commit-sha>)
+```
+
+
+
 
 
 
